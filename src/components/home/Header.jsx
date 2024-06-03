@@ -1,0 +1,67 @@
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import HeaderNavContent from "../header/HeaderNavContent";
+import HeaderNavContentHomeCustom from "./header-nav-content-custom-home";
+
+const Header = () => {
+  const [navbar, setNavbar] = useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 10) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", changeBackground);
+  }, []);
+
+  return (
+    // <!-- Main Header-->
+    <header
+      className={`main-header -type-17 ${
+        navbar ? "fixed-header animated slideInDown" : ""
+      }`}
+    >
+      <div className="container-fluid">
+        <div className="main-box">
+          {/* <!--Nav Outer --> */}
+          <div className="nav-outer">
+            <div className="logo-box">
+              <div className="logo">
+                <Link to="/">
+                  <img src="/images/logo-dark-blue.svg" alt="brand" />
+                </Link>
+              </div>
+            </div>
+            {/* End .logo-box */}
+          </div>
+          {/* End .nav-outer */}
+
+          <div className="outer-box">
+            <HeaderNavContentHomeCustom />
+            {/* <!-- Main Menu End--> */}
+
+            {/* <!-- Login/Register --> */}
+            <div className="btn-box">
+              <a href="/login" className="theme-btn -outline-dark-blue -rounded ">
+                Login / Register
+              </a>
+              {/* <Link
+                to="/employers-dashboard/post-jobs"
+                className="theme-btn -blue -rounded"
+              >
+                Job Post
+              </Link> */}
+            </div>
+          </div>
+        </div>
+        {/* <!-- Main box --> */}
+      </div>
+    </header>
+  );
+};
+
+export default Header;

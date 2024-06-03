@@ -1,0 +1,24 @@
+/* skill-selector.css */
+.skill-selector-container {
+    width: 100%;
+  }
+  
+  .skill-selector-container .upper-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .skill-selector-container label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  /* Customize select styles as needed */
+  .select {
+    width: 100%;
+  }
+  
+  .basic-multi-select {
+    width: 100%;
+  }
+  
