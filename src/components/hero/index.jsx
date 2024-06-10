@@ -9,7 +9,7 @@ const index = () => {
       style={{ backgroundImage: "url(/images/index-17/header/bg.png)" }}
     >
       <div className="auto-container">
-        <div className="row align-items-center">
+        <div className="row ">
           <div className="content-column col-lg-7 col-md-12 col-sm-12">
             <div className="inner-column">
               <div
@@ -27,16 +27,16 @@ const index = () => {
               </div>
               {/* End title-box */}
 
-              <div
+             {/*  <div
                 className="job-search-form"
                 data-aos="fade-up"
                 data-aos-delay="500"
               >
                 <SearchForm5 />
-              </div>
-              {/* <!-- Job Search Form --> */}
+              </div>  */}
+              {/* <!-- Job Search Form -->
 
-              <PopularSearch />
+            {/*   <PopularSearch /> */}
               {/* <!-- End Popular Search --> */}
             </div>
           </div>

@@ -1,6 +1,6 @@
 
 import MobileMenu from "../../header/MobileMenu";
-import Header from "./Header";
+import Header from "./header";
 import ForgotPasswordForm from "@/components/common/form/login/forgot-password-form";
 import ResetPasswordForm from "@/components/common/form/login/reset-password-form";
 

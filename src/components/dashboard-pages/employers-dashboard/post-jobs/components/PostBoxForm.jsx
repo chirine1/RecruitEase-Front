@@ -64,6 +64,8 @@ const PostBoxForm = () => {
           minSalary: "",
           maxSalary: "",
           deadline: "",
+          questions: Array(10).fill(""), // Initialize questions
+          answers: Array(10).fill(""), // Initialize answers
         });
       } catch (error) {
         console.error("Failed to fetch data from backend", error);
@@ -84,6 +86,8 @@ const PostBoxForm = () => {
       minSalary: "",
       maxSalary: "",
       deadline: "",
+      questions: Array(10).fill(""),
+      answers: Array(10).fill(""),
     },
     validationSchema: Yup.object().shape({
       jobTitle: Yup.string().required("Job Title is required"),
@@ -104,6 +108,8 @@ const PostBoxForm = () => {
       deadline: Yup.date()
         .required("Application Deadline Date is required")
         .min(new Date(), "Deadline must be in the future"),
+      questions: Yup.array().of(Yup.string().required("Question is required")),
+      answers: Yup.array().of(Yup.string().required("Answer is required")),
     }),
     onSubmit: (values) => {
       const formData = {
@@ -118,6 +124,8 @@ const PostBoxForm = () => {
           label: values.industry,
         },
         skills: values.skills.map((skill) => ({ label: skill })),
+        questions: values.questions,
+        answers: values.answers,
       };
 
       // Submit form data to backend
@@ -318,6 +326,55 @@ const PostBoxForm = () => {
             <div className="error">{formik.errors.deadline}</div>
           ) : null}
         </div>
+
+        {/* Questions and Answers */}
+        {formik.values.questions.map((question, index) => (
+          <div className="form-group col-lg-12 col-md-12" key={index}>
+            <label>Question {index + 1}</label>
+            <input
+              type="text"
+              name={`questions.${index}`}
+              placeholder={`Question ${index + 1}`}
+              value={formik.values.questions[index]}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.questions && formik.errors.questions ? (
+              <div className="error">{formik.errors.questions[index]}</div>
+            ) : null}
+            <div className="radio-group">
+              <label style={{ marginRight: "10px" }}>
+                <input
+                  type="radio"
+                  name={`answers.${index}`}
+                  value="Yes"
+                  checked={formik.values.answers[index] === "Yes"}
+                  onChange={() =>
+                    formik.setFieldValue(`answers.${index}`, "Yes")
+                  }
+                  onBlur={formik.handleBlur}
+                />
+                Yes
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name={`answers.${index}`}
+                  value="No"
+                  checked={formik.values.answers[index] === "No"}
+                  onChange={() =>
+                    formik.setFieldValue(`answers.${index}`, "No")
+                  }
+                  onBlur={formik.handleBlur}
+                />
+                No
+              </label>
+            </div>
+            {formik.touched.answers && formik.errors.answers ? (
+              <div className="error">{formik.errors.answers[index]}</div>
+            ) : null}
+          </div>
+        ))}
 
         {/* Submit Button */}
         <div className="form-group col-lg-12 col-md-12 text-right">

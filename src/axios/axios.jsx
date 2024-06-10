@@ -5,10 +5,12 @@ export default axios.create({
     baseURL: BASE_URL
 });
 
-axios.defaults.timeout = 3000
+axios.defaults.timeout = 100000000
 
 export const axiosPrivate = axios.create({
     baseURL: BASE_URL,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 });
+
+axiosPrivate.defaults.timeout = 100000000

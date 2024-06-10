@@ -26,8 +26,6 @@ import EmployersSingle from "./pages/employers-single";
 
 import CandidateListPage from "./pages/candidates-list";
 
-import CandidateSingleDynamic from "./pages/candidates-single/all-applicants";
-
 import BlogListpage from "./pages/blog/blog-list";
 
 import BlogDetailsDynamic from "./pages/blog/blog-details";
@@ -51,9 +49,7 @@ import ChangePasswordEmploeeDBPage from "./pages/employers-dashboard/change-pass
 import DashboardPage from "./pages/candidates-dashboard/dashboard";
 import AppliedJobsPage from "./pages/candidates-dashboard/applied-jobs";
 import ChangePasswordPage from "./pages/candidates-dashboard/change-password";
-import CVMannagerPage from "./pages/candidates-dashboard/cv-manager";
-import JobAlertPage from "./pages/candidates-dashboard/job-alerts";
-import MessageesPage from "./pages/candidates-dashboard/messages";
+
 import MyProfilePage from "./pages/candidates-dashboard/my-profile";
 import MyResumePage from "./pages/candidates-dashboard/my-resume";
 import PackagePage from "./pages/candidates-dashboard/packages";
@@ -87,6 +83,25 @@ import JobSingleDynamicCand from "./pages/candidates-dashboard/job-single";
 import ApplicantsPage from "./pages/employers-dashboard/applicants-job";
 import PaymentPage from "./pages/employers-dashboard/payment/paymentPage";
 import AddBlogPostPageCand from "./components/blog-meu-pages/blog-list-cand/add-post";
+import BlogDetailsCandidate from "./pages/blog/blog-details-candidate";
+import ContactPageCand from "./pages/candidates-dashboard/contact-admin";
+import ContactPageEmployer from "./pages/employers-dashboard/contact-admin";
+import EmployersSingleCand from "./pages/candidates-dashboard/employer-single";
+import CandidateSingleDynamicEmployer from "./pages/employers-dashboard/candidate-single";
+import TestPageCandidate from "./pages/candidates-dashboard/test";
+import PaymentPageAdmin from "./pages/admin-dashboard/manage/payment";
+import BlogListPageEmployer from "./pages/blog/blog-list-employer";
+import BlogDetailsEmployer from "./pages/blog/blog-details-employer";
+import BlogListAdmin from "./pages/blog/blog-list-admin";
+import BlogDetailsAdmin from "./pages/blog/blog-details-admin";
+import AddBlogPostPageEmployer from "./components/blog-meu-pages/blog-list-employer/add-post";
+import AddBlogPostPageAdmin from "./components/blog-meu-pages/blog-list-admin/add-post";
+import AdminMessages from "./pages/admin-dashboard/messages";
+import CandMessages from "./pages/candidates-dashboard/messages";
+import BlogListPageGuest from "./pages/blog/blog-list";
+import BlogDetailsGuest from "./pages/blog/blog-details";
+import CandidateSingleDynamicAdmin from "./pages/admin-dashboard/candidate-single";
+import EmployersSingleAdmin from "./pages/admin-dashboard/employer-single";
 
 function App() {
   useEffect(() => {
@@ -116,15 +131,8 @@ function App() {
 
               <Route path="employers-single" element={<EmployersSingle />} />
 
-              <Route path="candidate/blog" element={<BlogListPageCand />} />
-
-              <Route
-                path="candidates-single"
-                element={<CandidateSingleDynamic />}
-              />
-
-              <Route path="blog-list" element={<BlogListpage />} />
-              <Route path="blog-details" element={<BlogDetailsDynamic />} />
+              <Route path="blog-list" element={<BlogListPageGuest />} />
+              <Route path="blog-details/:id" element={<BlogDetailsGuest />} />
 
               <Route path="about" element={<AboutPage />} />
               <Route path="pricing" element={<PricingPage />} />
@@ -147,6 +155,11 @@ function App() {
                 element={<ProtectedRoute roles={["recruiter"]} />}
               >
                 <Route path="dashboard" element={<DashboardEmploeeDBPage />} />
+                <Route path="contact" element={<ContactPageEmployer />} />
+                <Route
+                  path="candidates-single/:id"
+                  element={<CandidateSingleDynamicEmployer />}
+                />
                 <Route
                   path="company-profile"
                   element={<CompanyProfileEmploeeDBPage />}
@@ -156,25 +169,28 @@ function App() {
                   path="manage-jobs"
                   element={<ManageJobsEmploeeDBPage />}
                 />
-
                 <Route path="job/:jobId" element={<ViewJobEmployerPage />} />
-
                 <Route
                   path="all-applicants"
                   element={<AllApplicantsEmploeesPage />}
                 />
-
                 <Route path="applicant/:jobId" element={<ApplicantsPage />} />
-
                 <Route path="packages" element={<PackageEmploeeDBPage />} />
                 <Route path="messages" element={<MessageEmploeeDBPage />} />
-
                 <Route
                   path="change-password"
                   element={<ChangePasswordEmploeeDBPage />}
                 />
-
                 <Route path="checkout/:label" element={<PaymentPage />} />
+                <Route path="blog-list" element={<BlogListPageEmployer />} />
+                <Route
+                  path="blog-details/:id"
+                  element={<BlogDetailsEmployer />}
+                />
+                <Route
+                  path="add-blog-post"
+                  element={<AddBlogPostPageEmployer />}
+                />
               </Route>
 
               <Route
@@ -182,21 +198,33 @@ function App() {
                 element={<ProtectedRoute roles={["candidate"]} />}
               >
                 <Route path="dashboard" element={<DashboardPage />} />
+                <Route
+                  path="test/:jobId/:applicationId"
+                  element={<TestPageCandidate />}
+                />
                 <Route path="applied-jobs" element={<AppliedJobsPage />} />
                 <Route
                   path="change-password"
                   element={<ChangePasswordPage />}
                 />
-                <Route path="cv-manager" element={<CVMannagerPage />} />
-                <Route path="job-alerts" element={<JobAlertPage />} />
-                <Route path="messages" element={<MessageesPage />} />
+                <Route
+                  path="employers-single/:id"
+                  element={<EmployersSingleCand />}
+                />
+                <Route path="messages" element={<CandMessages />} />
                 <Route path="my-profile" element={<MyProfilePage />} />
                 <Route path="my-resume" element={<MyResumePage />} />
                 <Route path="find-jobs" element={<JobListPage />} />
                 <Route path="add-blog-post" element={<AddBlogPostPageCand />} />
+                <Route path="contact" element={<ContactPageCand />} />
                 <Route
                   path="find-jobs/:jobId"
                   element={<JobSingleDynamicCand />}
+                />
+                <Route path="blog-list" element={<BlogListPageCand />} />
+                <Route
+                  path="blog-details/:id"
+                  element={<BlogDetailsCandidate />}
                 />
                 <Route
                   path="short-listed-jobs"
@@ -205,10 +233,6 @@ function App() {
               </Route>
 
               <Route path="shop">
-                <Route path="shop-list" element={<ShopListPage />} />
-                <Route path="shop-single/:id" element={<ShopSingleDyanmic />} />
-                <Route path="cart" element={<CartPage />} />
-                <Route path="checkout" element={<CheckoutPage />} />
                 <Route
                   path="order-completed/:label"
                   element={<OrderCompletedPage />}
@@ -220,8 +244,9 @@ function App() {
                 element={<ProtectedRoute roles={["admin"]} />}
               >
                 <Route path="dashboard" element={<AdminDashboardPage />} />
-                <Route path="blog" element={<BlogPageAdmin />}>
-                  <Route path=":postId" element={<AdminDashboardPage />} />
+                <Route path="messages" element={<AdminMessages />} />
+                <Route path="blog-list" element={<BlogListAdmin />}>
+                  {/*  <Route path=":postId" element={<AdminDashboardPage />} /> */}
                 </Route>
                 <Route path="manage/candidates" element={<ManageCandidate />} />
                 <Route
@@ -229,6 +254,15 @@ function App() {
                   element={<ManageRecruiters />}
                 />
                 <Route path="manage/skills" element={<SkillsPageAdmin />} />
+                <Route path="manage/payment" element={<PaymentPageAdmin />} />
+                <Route
+                  path="candidates-single/:id"
+                  element={<CandidateSingleDynamicAdmin />}
+                />
+                <Route
+                  path="employers-single/:id"
+                  element={<EmployersSingleAdmin />}
+                />
                 <Route
                   path="manage/job-category"
                   element={<IndustriesPageAdmin />}
@@ -236,6 +270,11 @@ function App() {
                 <Route path="change-password" element={<PassPageAdmin />} />
                 <Route path="manage/jobs" element={<ManageJobs />} />
                 <Route path="jobs/:jobId" element={<JobSingleDynamicAdmin />} />
+                <Route path="blog-details/:id" element={<BlogDetailsAdmin />} />
+                <Route
+                  path="add-blog-post"
+                  element={<AddBlogPostPageAdmin />}
+                />
               </Route>
             </Route>
           </Routes>

@@ -1,36 +1,33 @@
+import React, { useState } from "react";
 
+const SearchBox = ({title, setTitle}) => {
+  
 
+  // Handler for input change
+  const handleChange = (e) => {
+    setTitle(e.target.value);
+  };
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addKeyword } from "../../../features/filter/filterSlice";
+  // Inline CSS styles
+  const inputStyle = {
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    flex: "1", // Allow the inputs to take up equal space
+  };
 
-const SearchBox = () => {
-    const { jobList } = useSelector((state) => state.filter);
-    const [getKeyWord, setkeyWord] = useState(jobList.keyword);
-    const dispath = useDispatch();
-
-    // keyword handler
-    const keywordHandler = (e) => {
-        dispath(addKeyword(e.target.value));
-    };
-
-    useEffect(() => {
-        setkeyWord(jobList.keyword);
-    }, [setkeyWord, jobList]);
-
-    return (
-        <>
-            <input
-                type="text"
-                name="listing-search"
-                placeholder="Job title, keywords, or company"
-                value={getKeyWord}
-                onChange={keywordHandler}
-            />
-            <span className="icon flaticon-search-3"></span>
-        </>
-    );
+  return (
+    <div>
+      <input
+        type="text"
+        name="title"
+        placeholder="Job title"
+        value={title}
+        onChange={handleChange}
+        style={inputStyle}
+      />
+    </div>
+  );
 };
 
 export default SearchBox;

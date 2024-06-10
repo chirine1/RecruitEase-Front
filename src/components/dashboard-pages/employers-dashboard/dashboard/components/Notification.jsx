@@ -1,49 +1,33 @@
+import React, { useState, useEffect } from "react";
+import { axiosPrivate } from "@/axios/axios";
+
 const Notification = () => {
+  // State to hold notifications data
+  const [notifications, setNotifications] = useState([]);
+
+  // Function to fetch notifications from the database
+  const fetchNotifications = async () => {
+    try {
+      const response = await axiosPrivate.get("/notif/current"); // Adjust the endpoint as per your backend API
+      setNotifications(response.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  // Fetch notifications when the component mounts
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
   return (
     <ul className="notification-list">
-      <li>
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Henry Wilson</strong> applied for a job
-        <span className="colored"> Product Designer</span>
-      </li>
-      {/* End li */}
-
-      <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Raul Costa</strong> applied for a job
-        <span className="colored"> Product Manager, Risk</span>
-      </li>
-      {/* End li */}
-
-      <li>
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Jack Milk</strong> applied for a job
-        <span className="colored"> Technical Architect</span>
-      </li>
-      {/* End li */}
-
-      <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Michel Arian</strong>
-        applied for a job
-        <span className="colored"> Software Engineer</span>
-      </li>
-      {/* End li */}
-
-      <li>
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Wade Warren</strong> applied for a job
-        <span className="colored"> Web Developer</span>
-      </li>
-      {/* End li */}
-
-      <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Michel Arian</strong>
-        applied for a job
-        <span className="colored"> Software Engineer</span>
-      </li>
-      {/* End li */}
+      {notifications.map((notification, index) => (
+        <li key={index} className={"success" }>
+          <span className="icon flaticon-briefcase"></span>
+           {notification.content}
+        </li>
+      ))}
     </ul>
   );
 };

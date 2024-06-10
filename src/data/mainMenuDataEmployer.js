@@ -14,7 +14,13 @@ export const dashboardNavEmployer = {
     routePath: "/employers-dashboard/company-profile",
     active: "",
   };
-  
+  export const contact = {
+    id: 2,
+    name: "Contact",
+    icon: "la-user-tie",
+    routePath: "/employers-dashboard/contact",
+    active: "",
+  };
   export const postJobNav = {
     id: 3,
     name: "Post a New Job",
@@ -42,7 +48,7 @@ export const dashboardNavEmployer = {
   // Export individual routes for blog and pricing
   export const blogEmployer = {
     name: "Blog List",
-    routePath: "/employer/blog-list",
+    routePath: "/employers-dashboard/blog-list",
   };
   
   export const pricingEmployer = {

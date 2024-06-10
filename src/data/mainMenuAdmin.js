@@ -16,6 +16,6 @@ export const ManageItemsAdmin = [
 export const blogItemsAdmin = [
   {
     name: "blog ",
-    routePath: "/admins-dashboard/blog",
+    routePath: "/admins-dashboard/blog-list",
   },
 ];

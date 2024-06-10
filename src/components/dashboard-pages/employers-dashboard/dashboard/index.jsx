@@ -14,14 +14,14 @@ import DashboardEmployerHeaderCustom from "@/components/header/employer-header-c
 const Index = () => {
   return (
     <div
-    className="page-wrapper"
-    style={{
-      backgroundColor: "#f5f7fc",
-      marginTop: "100px",
-      minHeight: "calc(100vh - 100px)",
-      overflowY: "auto",
-    }}
-  >
+      className="page-wrapper"
+      style={{
+        backgroundColor: "#f5f7fc",
+        marginTop: "100px",
+        minHeight: "calc(100vh - 100px)",
+        overflowY: "auto",
+      }}
+    >
       <div
         /* className="page-wrapper dashboard" */ style={{
           marginLeft: "200px",
@@ -79,21 +79,17 @@ const Index = () => {
               </div>
               {/* End .col */}
 
-              <div className="col-lg-12">
-                {/* <!-- applicants Widget --> */}
+             {/*  <div className="col-lg-12">
+                
                 <div className="applicants-widget ls-widget">
                   <div className="widget-title">
                     <h4>Recent Applicants</h4>
                   </div>
                   <div className="widget-content">
-                    <div className="row">
-                      {/* <!-- Candidate block three --> */}
-
-                      <Applicants />
-                    </div>
+                    <div className="row"> <Applicants /></div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* End .col */}
             </div>
             {/* End .row profile and notificatins */}

@@ -34,7 +34,7 @@ const JobSearchForm = () => {
                     {/* <!-- Form Group --> */}
                 </div>
             </div>
-            <JobSelect />
+           {/*  <JobSelect /> */}
         </>
     );
 };

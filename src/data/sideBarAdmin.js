@@ -37,6 +37,14 @@ const adminMenus = [
       routePath: "/admins-dashboard/manage/jobs",
       active: "",
     },
+    
+    {
+      id: 7,
+      name: "Manage Payment",
+      icon: "",
+      routePath: "/admins-dashboard/manage/payment",
+      active: "",
+    },
    
   ];
   export default  adminMenus

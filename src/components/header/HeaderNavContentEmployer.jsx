@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
 import {
-  allApplicantsNav,
   blogEmployer,
   companyProfileNav,
+  contact,
   dashboardNavEmployer,
   manageJobsNav,
   postJobNav,
@@ -96,6 +96,16 @@ const HeaderNavContentCandidate = () => {
           >
             <Link to={pricingEmployer.routePath}>
               <span>Payment</span>
+            </Link>
+          </li>
+          
+          <li
+            className={`${
+              isActiveLink(contact.routePath, pathname) ? "current" : ""
+            } `}
+          >
+            <Link to={contact.routePath}>
+              <span>Contact Admin</span>
             </Link>
           </li>
           {/* End Blog menu items */}

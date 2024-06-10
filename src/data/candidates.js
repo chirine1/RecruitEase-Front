@@ -1,12 +1,12 @@
 const candidates = [
     {
         id: 1,
-        avatar: "/images/resource/candidate-1.png",
-        name: "Darlene Robertson",
+        avatar: "/images/face2.jpg",
+        name: "Sammy Robertson",
         designation: "UI Designer",
         location: "London, UK",
         hourlyRate: "99",
-        tags: ["App", "Design", "Digital"],
+        tags: ["Senior Developper"],
         destination: {
             min: 0,
             max: 10,

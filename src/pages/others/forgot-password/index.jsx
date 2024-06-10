@@ -2,7 +2,7 @@
 
 
 import MetaComponent from "@/components/common/MetaComponent";
-import ForgotPassword from "@/components/pages-menu/confirm-email";
+import ForgotPassword from "@/components/pages-menu/forgot-password";
 const metadata = {
   title: 'confirm email || RecruitEase - Job Borad ',
   description:

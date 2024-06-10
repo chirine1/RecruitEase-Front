@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import {
   applicationsCand,
   blogItemsCand,
+  contact,
   dashboardItemsCand,
   findJobItemsCand,
   myProfileCand,
@@ -94,6 +95,17 @@ const HeaderNavContentCandidate = () => {
           >
             <Link to={blogItemsCand[0].routePath}>
               <span>Blog</span>
+            </Link>
+          </li>
+          <li
+            className={`${
+              isActiveLink(contact[0].routePath, pathname)
+                ? "current"
+                : ""
+            }  `}
+          >
+            <Link to={contact[0].routePath}>
+              <span>Contact Admin</span>
             </Link>
           </li>
           {/* End Blog menu items */}

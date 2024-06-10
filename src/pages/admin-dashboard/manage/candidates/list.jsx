@@ -72,7 +72,7 @@ const CandidatesTable = () => {
                   <td style={getStatusStyle(candidate.status)}>{candidate.status}</td>
                   <td style={getBanStatusStyle(candidate.ban_status)}>{candidate.ban_status}</td>
                   <td>
-                    <Link to={`/candidates/${candidate.id}`}>
+                    <Link to={`/admins-dashboard/candidates-single/${candidate.id}`}>
                       <button>View</button>
                     </Link>
                   </td>

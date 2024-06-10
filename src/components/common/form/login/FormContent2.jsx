@@ -38,7 +38,6 @@ const FormContent2 = () => {
       console.log(role);
 
       // Redirect to a protected route after successful login
-
       if (role == "candidate") {
         navigate("/candidates-dashboard/dashboard");
       } else if (role == "recruiter") {
@@ -53,6 +52,9 @@ const FormContent2 = () => {
         await axios.post("/auth/send_email", { email });
         navigate("/confirm-email", { state: { email } });
       }
+      if (error.response.status === 409) {
+        setEmailError("Account banned");
+      }
       console.error("Login failed", error);
       setLoginError("No user found. Please check your credentials.");
     }
@@ -63,7 +65,17 @@ const FormContent2 = () => {
     return password.length >= 8 && password.length <= 32;
   };
 
+  // Function to validate email format
+  const validateEmailFormat = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleForgotPassword = async () => {
+    if (!validateEmailFormat(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
     await axios.post("/auth/forgot_password_mail", { email });
     navigate("/forgot-password", { state: { email } });
   };

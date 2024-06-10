@@ -7,7 +7,7 @@ const footerContent = [
       { name: "About Us", route: "/about" },
       { name: "Terms Page", route: "/terms" },
       { name: "Blog", route: "/blog-list" },
-      { name: "Contact", route: "/contact" },
+     
     ],
   }
 ];

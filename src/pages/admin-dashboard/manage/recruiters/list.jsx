@@ -78,7 +78,7 @@ const RecruitersTable = () => {
                     {recruiter.ban_status}
                   </td>
                   <td>
-                    <Link to={`/recruiters/${recruiter.id}`}>
+                    <Link to={`/admins-dashboard/employers-single/${recruiter.id}`}>
                       <button>View</button>
                     </Link>
                   </td>

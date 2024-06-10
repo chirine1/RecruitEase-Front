@@ -25,7 +25,7 @@ const ManageRecruiters = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Manage Candidates" />
+          <BreadCrumb title="Manage Recruiters" />
           {/* breadCrumb */}
 
           <MenuToggler />

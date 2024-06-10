@@ -1,5 +1,4 @@
 import MobileMenu from "../../../header/MobileMenu";
-import LoginPopup from "../../../common/form/login/LoginPopup";
 import BreadCrumb from "../../BreadCrumb";
 import TopCardBlock from "./components/TopCardBlock";
 import ProfileChart from "./components/ProfileChart";
@@ -29,7 +28,7 @@ const Index = () => {
         {/* <LoginPopup /> */}
         {/* End Login Popup Modal */}
 
-        <CandidateCustomHeader/>
+        <CandidateCustomHeader />
         {/* End Header */}
 
         <MobileMenu />
@@ -41,7 +40,7 @@ const Index = () => {
         {/* <!-- Dashboard --> */}
         <section className="user-dashboard">
           <div className="dashboard-outer">
-            <BreadCrumb title="Howdy, Jerome!!" />
+            <BreadCrumb title="" />
             {/* breadCrumb */}
 
             <MenuToggler />
@@ -77,18 +76,18 @@ const Index = () => {
 
               <div className="col-lg-12">
                 {/* <!-- applicants Widget --> */}
-                <div className="applicants-widget ls-widget">
+                {/*  <div className="applicants-widget ls-widget">
                   <div className="widget-title">
                     <h4>Jobs Applied Recently</h4>
                   </div>
                   <div className="widget-content">
                     <div className="row">
-                      {/* <!-- Candidate block three --> */}
+                     
 
                       <JobApplied />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               {/* End .col */}
             </div>

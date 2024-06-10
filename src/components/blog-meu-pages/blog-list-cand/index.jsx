@@ -1,17 +1,18 @@
-
-import FooterDefault from "../../footer/common-footer";
-
+import React, { useState, useEffect } from "react";
 import MobileMenu from "../../header/MobileMenu";
 import BlogPagination from "../blog-sidebar/BlogPagination";
 import CandidateCustomHeader from "@/components/header/candidate-custom";
-import Blog7 from "../../blog/Blog7";
 import Breadcrumb from "../../common/Breadcrumb";
 import { useNavigate } from "react-router-dom";
-
+import Blog7 from "@/pages/blog/blog-list-candidate/blog7";
+import axios from "@/axios/axios"; // Import axios to fetch data
 
 const Index = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 6; // Number of items to display per page
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const buttonStyle = {
     backgroundColor: "#007bff", // Blue color
@@ -24,11 +25,11 @@ const Index = () => {
     textTransform: "uppercase",
     transition: "background-color 0.3s ease",
     display: "inline-block",
-    marginBottom: "20px" // Add margin for spacing
+    marginBottom: "20px", // Add margin for spacing
   };
 
   const buttonHoverStyle = {
-    backgroundColor: "#0056b3" // Darker blue on hover
+    backgroundColor: "#0056b3", // Darker blue on hover
   };
 
   const handleMouseEnter = (e) => {
@@ -37,6 +38,23 @@ const Index = () => {
 
   const handleMouseLeave = (e) => {
     Object.assign(e.target.style, buttonStyle);
+  };
+
+  useEffect(() => {
+    const fetchTotalPages = async () => {
+      try {
+        const response = await axios.get("/blog_post", { withCredentials: true });
+        setTotalPages(Math.ceil(response.data.length / itemsPerPage));
+      } catch (error) {
+        console.error("Error fetching total pages:", error);
+      }
+    };
+
+    fetchTotalPages();
+  }, [itemsPerPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -64,16 +82,20 @@ const Index = () => {
                     style={buttonStyle}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    onClick={()=>navigate("/candidates-dashboard/add-blog-post")}
+                    onClick={() => navigate("/candidates-dashboard/add-blog-post")}
                   >
                     Add Blog Post
                   </button>
                 </div>
-                <Blog7 />
+                <Blog7 currentPage={currentPage} itemsPerPage={itemsPerPage} />
               </div>
               {/* End blog-grid */}
 
-              <BlogPagination />
+              <BlogPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
               {/* End blog pagination */}
             </div>
             {/* <!--End Content Side--> */}
@@ -87,9 +109,6 @@ const Index = () => {
         </div>
       </div>
       {/* <!-- End Sidebar Container --> */}
-
-  
-      {/* <!-- End Main Footer --> */}
     </>
   );
 };

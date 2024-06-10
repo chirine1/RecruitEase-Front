@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { toast } from "react-toastify";
 
 const JobListingsTable = () => {
   const [jobs, setJobs] = useState([]);
@@ -51,8 +52,10 @@ const JobListingsTable = () => {
           job.id === jobId ? { ...job, deadline: newDeadline } : job
         )
       );
+      toast.success("extended deadline")
     } catch (error) {
       console.error("Failed to update deadline", error);
+      toast.error("failed to extend")
     }
   };
 
@@ -68,8 +71,10 @@ const JobListingsTable = () => {
           job.id === jobId ? { ...job, status: "cancelled" } : job
         )
       );
+      toast.success("cancelled job successfully")
     } catch (error) {
       console.error("Failed to cancel job", error);
+      toast.error("failed to cancel")
     }
   };
 
@@ -80,6 +85,26 @@ const JobListingsTable = () => {
       return { color: "green" };
     }
   };
+
+  const buttonStyle = {
+    backgroundColor: "#007BFF",
+    color: "white",
+    border: "none",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    textDecoration: "none",
+  };
+  const cancelStyle = {
+    backgroundColor: "#FF6347",
+    color: "white",
+    border: "none",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    textDecoration: "none",
+  };
+
 
   return (
     <div className="tabs-box">
@@ -96,7 +121,7 @@ const JobListingsTable = () => {
                 <th>Status</th>
                 <th>View</th>
                 <th>Extend Deadline</th>
-                <th>Delete</th>
+                <th>Cancel</th>
                 <th>Applicants</th>
               </tr>
             </thead>
@@ -107,8 +132,11 @@ const JobListingsTable = () => {
                   <td>{formattedDeadline(job.deadline)}</td>
                   <td style={getStatusStyle(job.status)}>{job.status}</td>
                   <td>
-                    <Link to={`/employers-dashboard/job/${job.id}`}>
-                      <button>View</button>
+                    <Link
+                      to={`/employers-dashboard/job/${job.id}`}
+                      
+                    >
+                      View
                     </Link>
                   </td>
                   <td>
@@ -122,7 +150,10 @@ const JobListingsTable = () => {
                           }
                           min={new Date().toISOString().split("T")[0]}
                         />
-                        <button onClick={() => handleSaveDeadline(job.id)}>
+                        <button
+                          onClick={() => handleSaveDeadline(job.id)}
+                         
+                        >
                           Save
                         </button>
                       </>
@@ -131,12 +162,20 @@ const JobListingsTable = () => {
                     )}
                   </td>
                   <td>
-                    <button onClick={() => handleDeleteJob(job.id)}>
+                    <button
+                      onClick={() => handleDeleteJob(job.id)}
+                      style={cancelStyle}
+                    >
                       Cancel
                     </button>
                   </td>
                   <td>
-                    <Link to={`/employers-dashboard/applicant/${job.id}`}>View Applicants</Link>
+                    <Link
+                      to={`/employers-dashboard/applicant/${job.id}`}
+                      style={buttonStyle}
+                    >
+                      View Applicants
+                    </Link>
                   </td>
                 </tr>
               ))}

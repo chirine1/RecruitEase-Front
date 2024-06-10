@@ -1,34 +1,42 @@
+import React, { useEffect, useState } from 'react';
+import { axiosPrivate } from '@/axios/axios';
+
 const TopCardBlock = () => {
+  const [messageCount, setMessageCount] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMessageCount = async () => {
+      try {
+        const response = await axiosPrivate.get('/stats/messages'); // Replace with your API endpoint
+        console.log('API response:', response.data); // Log the response data for debugging
+        setMessageCount(response.data); // Assuming the API returns an object with a 'count' property
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchMessageCount();
+  }, []);
+
+  // Log the current message count state
+  console.log('Current message count:', messageCount);
+
   const cardContent = [
-    {
-      id: 1,
-      icon: "flaticon-briefcase",
-      countNumber: "22",
-      metaName: "Applied Jobs",
-      uiClass: "ui-blue",
-    },
-    {
-      id: 2,
-      icon: "la-file-invoice",
-      countNumber: "9382",
-      metaName: "Job Alerts",
-      uiClass: "ui-red",
-    },
     {
       id: 3,
       icon: "la-comment-o",
-      countNumber: "74",
+      countNumber: messageCount !== null ? messageCount : "74", // Use fetched count or default
       metaName: "Messages",
       uiClass: "ui-yellow",
     },
-    {
-      id: 4,
-      icon: "la-bookmark-o",
-      countNumber: "32",
-      metaName: "Shortlist",
-      uiClass: "ui-green",
-    },
   ];
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>

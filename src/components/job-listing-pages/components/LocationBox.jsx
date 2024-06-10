@@ -1,36 +1,33 @@
+import React, { useState } from "react";
 
+const LocationBox = ({location , setLocation}) => {
+  
 
+  // Handler for input change
+  const handleChange = (e) => {
+    setLocation(e.target.value);
+  };
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addLocation } from "../../../features/filter/filterSlice";
+  // Inline CSS styles
+  const inputStyle = {
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    flex: "1", // Allow the inputs to take up equal space
+  };
 
-const LocationBox = () => {
-    const { jobList } = useSelector((state) => state.filter);
-    const [getLocation, setLocation] = useState(jobList.location);
-    const dispath = useDispatch();
-
-    // location handler
-    const locationHandler = (e) => {
-        dispath(addLocation(e.target.value));
-    };
-
-    useEffect(() => {
-        setLocation(jobList.location);
-    }, [setLocation, jobList]);
-
-    return (
-        <>
-            <input
-                type="text"
-                name="listing-search"
-                placeholder="City or postcode"
-                value={getLocation}
-                onChange={locationHandler}
-            />
-            <span className="icon flaticon-map-locator"></span>
-        </>
-    );
+  return (
+    <div>
+      <input
+        type="text"
+        name="location"
+        placeholder="Country"
+        value={location}
+        onChange={handleChange}
+        style={inputStyle}
+      />
+    </div>
+  );
 };
 
 export default LocationBox;

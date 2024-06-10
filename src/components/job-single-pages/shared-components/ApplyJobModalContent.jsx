@@ -3,8 +3,9 @@ import { useFormik } from "formik";
 import { axiosPrivate } from "@/axios/axios";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import axios from "@/axios/axios";
 
-const ApplyJobModalContent = ({ jobId }) => {
+const ApplyJobModalContent = ({ jobId, setAlreadyApplied }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
@@ -23,6 +24,9 @@ const ApplyJobModalContent = ({ jobId }) => {
         };
         const response = await axiosPrivate.post("/application", data);
         console.log("Form submission successful:", response.data);
+        const target_id_response =  await axios.get(`/company/fromjob/${jobId}`) ;
+        await axios.post("/notif",{content:"New Application",target_id:target_id_response.data});
+        setAlreadyApplied(true)
         toast.success("Job application submitted successfully");
         // Reset form
         formik.resetForm();

@@ -1,17 +1,57 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import candidatesMenuData from "../../data/candidatesMenuData";
-import HeaderNavContent from "./HeaderNavContent";
-import { isActiveLink } from "../../utils/linkActiveChecker";
-import { useLocation } from "react-router-dom";
 import HeaderNavContentCandidate from "./HeaderNavContentCandidate";
-import axios from "@/axios/axios";
+import { useLocation } from "react-router-dom";
+import axios, { axiosPrivate } from "@/axios/axios";
 import { logoutUser } from "../logout";
 
 const DashboardCandidatesHeader = () => {
   const { pathname } = useLocation();
   const [navbar, setNavbar] = useState(true);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null); // State to store user data
+
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  const popupStyles = {
+    position: "absolute",
+    top: "50px",
+    right: "0",
+    width: "300px",
+    maxHeight: "400px",
+    backgroundColor: "white",
+    border: "1px solid #ccc",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+    overflow: "hidden",
+    zIndex: 1000,
+  };
+
+  const headerStyles = {
+    padding: "10px",
+    backgroundColor: "#f0f0f0",
+    borderBottom: "1px solid #ccc",
+    fontWeight: "bold",
+  };
+
+  const listStyles = {
+    maxHeight: "350px",
+    overflowY: "auto",
+  };
+
+  const itemStyles = {
+    padding: "10px",
+    borderBottom: "1px solid #ccc",
+  };
+
+  const dateStyles = {
+    fontSize: "12px",
+    color: "#888",
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
 
   const changeBackground = () => {
     if (window.scrollY >= 0) {
@@ -23,7 +63,37 @@ const DashboardCandidatesHeader = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
-  });
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axiosPrivate.get("/notif/current");
+        setNotifications(response.data);
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axiosPrivate.get("/auth/current");
+        setUser(response.data);
+        console.log(user);
+      } catch (error) {
+        console.error("Failed to fetch current user:", error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -59,16 +129,31 @@ const DashboardCandidatesHeader = () => {
           {/* End .nav-outer */}
 
           <div className="outer-box">
-            <button className="menu-btn">
-              <span className="count">1</span>
-              <span className="icon la la-heart-o"></span>
-            </button>
-            {/* wishlisted menu */}
+            <Link to={"/candidates-dashboard/messages"}>
+              <button className="menu-btn">
+                <span className="icon la la-envelope"></span>
+              </button>
+            </Link>
 
-            <button className="menu-btn">
+            {/* Notifications button */}
+            <button className="menu-btn" onClick={toggleNotifications}>
               <span className="icon la la-bell"></span>
             </button>
-            {/* End notification-icon */}
+            {showNotifications && (
+              <div style={popupStyles}>
+                <div style={headerStyles}>Notifications</div>
+                <div style={listStyles}>
+                  {notifications.map((notification) => (
+                    <div key={notification.id} style={itemStyles}>
+                      <div>{notification.content}</div>
+                      <div style={dateStyles}>
+                        {new Date(notification.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* <!-- Dashboard Option --> */}
             <div className="dropdown dashboard-option">
@@ -81,7 +166,11 @@ const DashboardCandidatesHeader = () => {
                 <img
                   alt="avatar"
                   className="thumb"
-                  src="/src/images/face.jpg"
+                  src={
+                    user?.img
+                      ? `http://localhost:8000/static/images/${user.img}`
+                      : "/images/avatar.webp"
+                  }
                 />
                 <span className="name">My Account</span>
               </a>

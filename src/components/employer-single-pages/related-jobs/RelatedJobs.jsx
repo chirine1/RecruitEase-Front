@@ -1,51 +1,66 @@
+import React, { useState, useEffect } from "react";
+import axios, { axiosPrivate } from "@/axios/axios";
 import { Link } from "react-router-dom";
-import jobs from "../../../data/job-featured";
 
+const RelatedJobs = ({ id }) => {
+  const [jobs, setJobs] = useState([]);
 
-const RelatedJobs = () => {
+  useEffect(() => {
+    axiosPrivate
+      .post(`/job/bycompany`, { id: id })
+      .then((response) => {
+        setJobs(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the jobs data!", error);
+      });
+  }, [id]);
+
+  if (jobs.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      {jobs.slice(0, 3).map((item) => (
+      {jobs.map((item) => (
         <div className="job-block" key={item.id}>
           <div className="inner-box">
             <div className="content">
               <span className="company-logo">
-                <img  src={item.logo} alt="resource" />
+                <img
+                  src={
+                    item?.company?.img
+                      ? `http://localhost:8000/static/images/${item?.company?.img}`
+                      : "/images/avatar.webp"
+                  }
+                  alt="resource"
+                />
               </span>
               <h4>
-                <Link to={`/job-single/${item.id}`}>{item.jobTitle}</Link>
+                <Link to={`/candidates-dashboard/find-jobs/${item.id}`}>
+                  {item.title}
+                </Link>
               </h4>
 
               <ul className="job-info">
                 <li>
                   <span className="icon flaticon-briefcase"></span>
-                  {item.company}
+                  {item.company.company_name}
                 </li>
-                {/* compnay info */}
                 <li>
                   <span className="icon flaticon-map-locator"></span>
                   {item.location}
                 </li>
-                {/* location info */}
                 <li>
-                  <span className="icon flaticon-clock-3"></span> {item.time}
+                  <span className="icon flaticon-clock-3"></span>
+                  {item.time}
                 </li>
-                {/* time info */}
                 <li>
-                  <span className="icon flaticon-money"></span> {item.salary}
+                  <span className="icon flaticon-money"></span>
+                  {item.salary}
                 </li>
-                {/* salary info */}
               </ul>
-              {/* End .job-info */}
 
-              <ul className="job-other-info">
-                {item.jobType.map((val, i) => (
-                  <li key={i} className={`${val.styleClass}`}>
-                    {val.type}
-                  </li>
-                ))}
-              </ul>
-              {/* End .job-other-info */}
               <button className="bookmark-btn">
                 <span className="flaticon-bookmark"></span>
               </button>

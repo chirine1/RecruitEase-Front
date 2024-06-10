@@ -18,8 +18,7 @@ const index = () => {
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
-      {/* End Login Popup Modal */}
+     
 
       <DefaulHeader />
       {/* <!--End Main Header --> */}
@@ -47,45 +46,10 @@ const index = () => {
       </section>
       {/* <!-- End About Section Three --> */}
 
-      <CallToAction2 />
+    {/*   <CallToAction2 /> */}
       {/* <!-- End CallToAction2 --> */}
 
-      <section className="testimonial-section-two">
-        <div className="container-fluid">
-          <div className="testimonial-left">
-            <img
-            
-              src="/images/resource/testimonial-left.png"
-              alt="testimonial"
-            />
-          </div>
-          {/* End left img group */}
-
-          <div className="testimonial-right">
-            <img
-            
-              src="/images/resource/testimonial-right.png"
-              alt="testimonial"
-            />
-          </div>
-          {/* End right img group */}
-
-          <div className="sec-title text-center">
-            <h2>Testimonials From Our Customers</h2>
-            <div className="text">
-              Lorem ipsum dolor sit amet elit, sed do eiusmod tempor
-            </div>
-          </div>
-          {/* <!-- Sec Title --> */}
-
-          <div className="carousel-outer" data-aos="fade-up">
-            <div className="testimonial-carousel">
-              <Testimonial2 />
-            </div>
-            {/* <!-- Testimonial Carousel --> */}
-          </div>
-        </div>
-      </section>
+     
       {/* <!-- End Testimonial Section --> */}
 
       <section className="work-section style-two">

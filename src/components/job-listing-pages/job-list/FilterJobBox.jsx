@@ -3,25 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "@/axios/axios";
 import { toast } from "react-toastify";
 
-const FilterJobBox = () => {
-  const [jobs, setJobs] = useState([]);
+const FilterJobBox = ({jobs}) => {
+ 
   const [sort, setSort] = useState("");
   const [perPage, setPerPage] = useState({ start: 0, end: 0 });
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get("/job");
-        console.log("Response from server:", response);
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Failed to fetch jobs", error);
-        toast.error("Failed to fetch jobs");
-      }
-    };
 
-    fetchJobs();
-  }, []);
 
   const sortHandler = (e) => {
     setSort(e.target.value);
@@ -58,7 +45,7 @@ const FilterJobBox = () => {
           </div>
         </div>
 
-        <div className="sort-by">
+        {/* <div className="sort-by">
           {(sort !== "" || perPage.start !== 0 || perPage.end !== 0) && (
             <button
               onClick={clearAll}
@@ -92,7 +79,7 @@ const FilterJobBox = () => {
               40 per page
             </option>
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="row">
@@ -123,8 +110,8 @@ const JobCard = ({ job }) => {
           <Link to={`${job.id}`}>{job.title}</Link>
         </h4>
         <div className="location">
-          {/* <span className="icon flaticon-map-locator"></span>
-          {country} */}
+          <span className="icon flaticon-map-locator"></span>
+          {job?.company?.contact_info?.country?.label || ""}
         </div>
       </div>
     </div>

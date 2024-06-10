@@ -1,35 +1,71 @@
 
 import LoginPopup from "@/components/common/form/login/LoginPopup";
 import FooterDefault from "@/components/footer/common-footer";
-import DefaulHeader from "@/components/header/DefaulHeader";
+
 import MobileMenu from "@/components/header/MobileMenu";
 import DetailsContent from "@/components/blog-meu-pages/blog-details/details-content";
 import blogs from "@/data/blogs";
 import {useParams } from "react-router-dom";
+import axios from "@/axios/axios";
 
 import MetaComponent from "@/components/common/MetaComponent";
-
+import { useEffect, useState } from "react";
+import DefaulHeader from "@/components/header/DefaulHeader";
 const metadata = {
   title: "Blog Details Dyanmic V1 || RecruitEase - Job Borad ",
   description: "RecruitEase - Job Borad ",
 };
 
-const BlogDetailsDynamic = () => {
+const BlogDetailsGuest = () => {
   let params = useParams();
   const id = params.id;
+  const [blogPost, setBlogPost] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const blog = blogs.find((item) => item.id == id) || blogs[0];
+  useEffect(() => {
+    const fetchBlogPost = async () => {
+      try {
+        const response = await axios.get(`/blog_post/${id}`, {
+          withCredentials: true,
+        });
+        setBlogPost(response.data);
+      } catch (error) {
+        setError("Error fetching blog post data");
+        console.error("Error fetching blog post data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogPost();
+  }, [id]); // Include id in the dependency array
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+
+  // Format the created_at date using toLocaleDateString
+  const formattedDate = blogPost?.created_at
+    ? new Date(blogPost.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
 
   return (
     <>
-    <MetaComponent meta={metadata} />
+      <MetaComponent meta={metadata} />
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
-      <LoginPopup />
-      {/* End Login Popup Modal */}
-
-      <DefaulHeader />
+      <DefaulHeader/>
       {/* <!--End Main Header --> */}
 
       <MobileMenu />
@@ -39,21 +75,14 @@ const BlogDetailsDynamic = () => {
       <section className="blog-single">
         <div className="auto-container">
           <div className="upper-box">
-            <h3>{blog?.blogSingleTitle}</h3>
+            <h3>{blogPost?.title}</h3>
 
             <ul className="post-info">
               <li>
-                <span className="thumb">
-                  <img
-                  
-                    src={"/images/resource/thumb-1.png"}
-                    alt="resource"
-                  />
-                </span>
-                Alison Dawn
+                
+                {blogPost?.creator?.fullname}
               </li>
-              <li>August 31, 2021</li>
-              <li>12 Comment</li>
+              <li>{formattedDate}</li>
             </ul>
             {/* End post info */}
           </div>
@@ -61,17 +90,21 @@ const BlogDetailsDynamic = () => {
         {/* End auto-container */}
 
         <figure className="main-image">
-          <img  src={blog?.img} alt="resource" />
+          <img
+            src={`http://localhost:8000/static/images/${blogPost.image}`}
+            alt="resource"
+          />
         </figure>
 
-        <DetailsContent />
+        {/* Pass the id prop to the Index component */}
+        <DetailsContent id={id} />
       </section>
       {/* <!-- End Blog Single --> */}
 
-      <FooterDefault footerStyle="alternate5" />
       {/* <!-- End Main Footer --> */}
     </>
   );
 };
 
-export default BlogDetailsDynamic
+
+export default BlogDetailsGuest
