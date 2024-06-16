@@ -1,0 +1,48 @@
+.error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    position: relative;
+  }
+  
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  
+  input[type="date"]::before {
+    content: attr(placeholder);
+    color: #999;
+    position: absolute;
+    left: 10px;
+  }
+  
+  input[type="date"]:focus::before,
+  input[type="date"]:valid::before {
+    content: "";
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns="http://www.w3.org/2000/svg"%20viewBox="0%200%2020%2020"><path%20fill="%23aaa"%20d="M6%207l4%204%204-4z"/><path%20fill="none"%20d="M0%200h20v20H0z"/></svg>') no-repeat;
+    background-size: 10px 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+  }
+  
